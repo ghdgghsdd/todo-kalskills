@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>To Do List</title>
+	<style>
+		.done{
+			text-decoration-line: line-through;
+		}
+	</style>
+</head>
+<body>
+<h1>To Do List</h1>
+<input id="input" type="text">
+<button id="addBtn">Add</button>
+<button id="clearBtn">Clear All</button>
+<ul id="myList">
+</ul>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script>
+	$(document).ready(function() {
+		var input = $("#input");
+		var myList = $("#myList");
+		function addToList(){
+			if(input.val().trim() == "") return;
+			var inputVal = $("<span>"+input.val()+"</span>");
+			var listItem = $("<li></li>");
+			var editBtn = $("<button>Edit</button>");
+			var deleteBtn = $("<button>Delete</button>");
+			var doneBtn = $("<button>Mark As Done</button>");
+			deleteBtn.on('click',function(){
+				$(this).parent().remove();
+			});
+			doneBtn.on('click',function(){
+				$(this).parent().toggleClass("done");
+				if($(this).parent().hasClass('done')){
+					$(this).text("Mark As Undone");
+				}else{
+					$(this).text("Mark As Done");
+				}
+			});
+			editBtn.on('click', function() {
+				inputVal.text("asd");
+				$(this).siblings().first().text(prompt("Change to:"));
+			});
+			listItem.append([inputVal,editBtn,deleteBtn,doneBtn]);
+			myList.append(listItem);
+			input.val("");
+		}
+		$("#addBtn").on('click', function(){
+			addToList();
+		});
+		input.on('keydown', function(event) {
+			if(event.keyCode == 13){
+				addToList();
+			}
+		});	
+		$("#clearBtn").on('click', function(){
+			myList.empty();
+		});
+	});
+	// document.getElementById("addBtn").addEventListener("click",addToList);
+	// document.getElementById("clearBtn").addEventListener("click",function(){
+	// 	var myList = document.getElementById("myList");
+	// 	myList.innerHTML = "";
+	// });
+	// document.getElementById("input").addEventListener("keydown",function(event){
+	// 	if(event.keyCode == 13){
+	// 		addToList();
+	// 	}
+	// });
+	// function addToList(){
+	// 	var input = document.getElementById("input");
+	// 	if (input.value.trim().length <= 0) return;
+	// 	var myList = document.getElementById("myList");
+	// 	var inputVal = input.value;
+	// 	var textNode = document.createTextNode(inputVal);
+	// 	var newListItem = document.createElement("li");
+	// 	var editBtn = document.createElement("button");
+	// 	editBtn.appendChild(document.createTextNode("Edit"));
+	// 	editBtn.addEventListener("click",function(){
+	// 		textNode.data = prompt("Edit Item");
+	// 	});
+	// 	var deleteBtn = document.createElement("button");
+	// 	deleteBtn.appendChild(document.createTextNode("Delete"));
+	// 	deleteBtn.addEventListener("click",function(){
+	// 		newListItem.remove();
+	// 	});
+	// 	var doneBtn = document.createElement("button");
+	// 	var doneTextNode = document.createTextNode("Mark as Done");
+	// 	doneBtn.appendChild(doneTextNode);
+	// 	doneBtn.addEventListener("click",function(){
+	// 		if(newListItem.classList.toggle("done")){
+	// 			doneTextNode.data = "Mark as Undone";
+	// 		}else{
+	// 			doneTextNode.data = "Mark as Done";
+	// 		}
+	// 	});
+	// 	newListItem.appendChild(textNode);
+	// 	newListItem.appendChild(editBtn);
+	// 	newListItem.appendChild(deleteBtn);
+	// 	newListItem.appendChild(doneBtn);
+	// 	myList.appendChild(newListItem);
+	// 	input.value = "";
+	// }
+</script>	
+</body>
+</html>
